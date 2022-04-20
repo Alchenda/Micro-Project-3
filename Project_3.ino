@@ -37,10 +37,11 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(CC, !Buttondir);
-  digitalWrite(C, Buttondir);
 
   DateTime now = RTC.now();
+  if(now.second() % 10 == 0) {
+    lcd.clear();
+  }
   lcd.setCursor(0,0);
   lcd.print("TIME: ");
   lcd.print(now.hour());
@@ -56,6 +57,15 @@ void loop() {
   lcd.print(now.month());
   lcd.print("/");
   lcd.print(now.day());
+
+  if(now.second() < 30) {
+    digitalWrite(CC, !Buttondir);
+    digitalWrite(C, Buttondir);
+  }
+  else {
+    digitalWrite(CC, 0);
+    digitalWrite(C, 0);
+  }
 
   delay(1000);
   
